@@ -99,21 +99,21 @@ class _ConnectPageState extends State<ConnectPage> {
       await room.connect(
         _uriCtrl.text,
         _tokenCtrl.text,
-        roomOptions: RoomOptions(
-          adaptiveStream: _adaptiveStream,
-          dynacast: _dynacast,
-          defaultVideoPublishOptions: VideoPublishOptions(
-            simulcast: _simulcast,
-          ),
-          defaultScreenShareCaptureOptions:
-              const ScreenShareCaptureOptions(useiOSBroadcastExtension: true),
+        roomOptions: const RoomOptions(
+          // adaptiveStream: _adaptiveStream,
+          // dynacast: _dynacast,
+          // defaultVideoPublishOptions: VideoPublishOptions(
+          //   simulcast: _simulcast,
+          // ),
+          // defaultScreenShareCaptureOptions:
+          //     const ScreenShareCaptureOptions(useiOSBroadcastExtension: true),
         ),
-        fastConnectOptions: _fastConnect
-            ? FastConnectOptions(
-                microphone: const TrackOption(enabled: true),
-                camera: const TrackOption(enabled: true),
-              )
-            : null,
+        // fastConnectOptions: _fastConnect
+        //     ? FastConnectOptions(
+        //         microphone: const TrackOption(enabled: true),
+        //         camera: const TrackOption(enabled: true),
+        //       )
+        //     : null,
       );
       await Navigator.push<void>(
         ctx,
@@ -129,33 +129,33 @@ class _ConnectPageState extends State<ConnectPage> {
     }
   }
 
-  void _setSimulcast(bool? value) async {
-    if (value == null || _simulcast == value) return;
-    setState(() {
-      _simulcast = value;
-    });
-  }
+  // void _setSimulcast(bool? value) async {
+  //   if (value == null || _simulcast == value) return;
+  //   setState(() {
+  //     _simulcast = value;
+  //   });
+  // }
 
-  void _setAdaptiveStream(bool? value) async {
-    if (value == null || _adaptiveStream == value) return;
-    setState(() {
-      _adaptiveStream = value;
-    });
-  }
+  // void _setAdaptiveStream(bool? value) async {
+  //   if (value == null || _adaptiveStream == value) return;
+  //   setState(() {
+  //     _adaptiveStream = value;
+  //   });
+  // }
 
-  void _setDynacast(bool? value) async {
-    if (value == null || _dynacast == value) return;
-    setState(() {
-      _dynacast = value;
-    });
-  }
+  // void _setDynacast(bool? value) async {
+  //   if (value == null || _dynacast == value) return;
+  //   setState(() {
+  //     _dynacast = value;
+  //   });
+  // }
 
-  void _setFastConnect(bool? value) async {
-    if (value == null || _fastConnect == value) return;
-    setState(() {
-      _fastConnect = value;
-    });
-  }
+  // void _setFastConnect(bool? value) async {
+  //   if (value == null || _fastConnect == value) return;
+  //   setState(() {
+  //     _fastConnect = value;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -196,12 +196,12 @@ class _ConnectPageState extends State<ConnectPage> {
                   //   padding: const EdgeInsets.only(bottom: 5),
                   //   child: Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text('Simulcast'),
-                  //       Switch(
-                  //         value: _simulcast,
-                  //         onChanged: (value) => _setSimulcast(value),
-                  //       ),
+                  //     children: const [
+                  //       Text('Simulcast'),
+                  //       // Switch(
+                  //       //   value: _simulcast,
+                  //       //   onChanged: (value) => _setSimulcast(value),
+                  //       // ),
                   //     ],
                   //   ),
                   // ),
@@ -209,12 +209,12 @@ class _ConnectPageState extends State<ConnectPage> {
                   //   padding: const EdgeInsets.only(bottom: 5),
                   //   child: Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text('Adaptive Stream'),
-                  //       Switch(
-                  //         value: _adaptiveStream,
-                  //         onChanged: (value) => _setAdaptiveStream(value),
-                  //       ),
+                  //     children: const [
+                  //       Text('Adaptive Stream'),
+                  //       // Switch(
+                  //       //   value: _adaptiveStream,
+                  //       //   onChanged: (value) => _setAdaptiveStream(value),
+                  //       // ),
                   //     ],
                   //   ),
                   // ),
@@ -222,12 +222,12 @@ class _ConnectPageState extends State<ConnectPage> {
                   //   padding: const EdgeInsets.only(bottom: 5),
                   //   child: Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text('Fast Connect'),
-                  //       Switch(
-                  //         value: _fastConnect,
-                  //         onChanged: (value) => _setFastConnect(value),
-                  //       ),
+                  //     children: const [
+                  //       Text('Fast Connect'),
+                  //       // Switch(
+                  //       //   value: _fastConnect,
+                  //       //   onChanged: (value) => _setFastConnect(value),
+                  //       // ),
                   //     ],
                   //   ),
                   // ),
@@ -235,12 +235,12 @@ class _ConnectPageState extends State<ConnectPage> {
                   //   padding: const EdgeInsets.only(bottom: 25),
                   //   child: Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       const Text('Dynacast'),
-                  //       Switch(
-                  //         value: _dynacast,
-                  //         onChanged: (value) => _setDynacast(value),
-                  //       ),
+                  //     children: const [
+                  //       Text('Dynacast'),
+                  //       // Switch(
+                  //       //   value: _dynacast,
+                  //       //   onChanged: (value) => _setDynacast(value),
+                  //       // ),
                   //     ],
                   //   ),
                   // ),
