@@ -68,10 +68,10 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     setState(() {});
   }
 
-  void _unpublishAll() async {
-    final result = await context.showUnPublishDialog();
-    if (result == true) await participant.unpublishAllTracks();
-  }
+  // void _unpublishAll() async {
+  //   final result = await context.showUnPublishDialog();
+  //   if (result == true) await participant.unpublishAllTracks();
+  // }
 
   bool get isMuted => participant.isMuted;
 
@@ -123,129 +123,129 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     }
   }
 
-  void _enableScreenShare() async {
-    if (WebRTC.platformIsDesktop) {
-      try {
-        final source = await showDialog<DesktopCapturerSource>(
-          context: context,
-          builder: (context) => ScreenSelectDialog(),
-        );
-        if (source == null) {
-          print('cancelled screenshare');
-          return;
-        }
-        print('DesktopCapturerSource: ${source.id}');
-        var track = await LocalVideoTrack.createScreenShareTrack(
-          ScreenShareCaptureOptions(
-            sourceId: source.id,
-            maxFrameRate: 15.0,
-          ),
-        );
-        await participant.publishVideoTrack(track);
-      } catch (e) {
-        print('could not publish video: $e');
-      }
-      return;
-    }
-    if (WebRTC.platformIsAndroid) {
-      // Android specific
-      requestBackgroundPermission([bool isRetry = false]) async {
-        // Required for android screenshare.
-        try {
-          bool hasPermissions = await FlutterBackground.hasPermissions;
-          if (!isRetry) {
-            const androidConfig = FlutterBackgroundAndroidConfig(
-              notificationTitle: 'Screen Sharing',
-              notificationText: 'LiveKit Example is sharing the screen.',
-              notificationImportance: AndroidNotificationImportance.Default,
-              notificationIcon: AndroidResource(
-                  name: 'livekit_ic_launcher', defType: 'mipmap'),
-            );
-            hasPermissions = await FlutterBackground.initialize(
-                androidConfig: androidConfig);
-          }
-          if (hasPermissions &&
-              !FlutterBackground.isBackgroundExecutionEnabled) {
-            await FlutterBackground.enableBackgroundExecution();
-          }
-        } catch (e) {
-          if (!isRetry) {
-            return await Future<void>.delayed(const Duration(seconds: 1),
-                () => requestBackgroundPermission(true));
-          }
-          print('could not publish video: $e');
-        }
-      }
+  // void _enableScreenShare() async {
+  //   if (WebRTC.platformIsDesktop) {
+  //     try {
+  //       final source = await showDialog<DesktopCapturerSource>(
+  //         context: context,
+  //         builder: (context) => ScreenSelectDialog(),
+  //       );
+  //       if (source == null) {
+  //         print('cancelled screenshare');
+  //         return;
+  //       }
+  //       print('DesktopCapturerSource: ${source.id}');
+  //       var track = await LocalVideoTrack.createScreenShareTrack(
+  //         ScreenShareCaptureOptions(
+  //           sourceId: source.id,
+  //           maxFrameRate: 15.0,
+  //         ),
+  //       );
+  //       await participant.publishVideoTrack(track);
+  //     } catch (e) {
+  //       print('could not publish video: $e');
+  //     }
+  //     return;
+  //   }
+  //   if (WebRTC.platformIsAndroid) {
+  //     // Android specific
+  //     requestBackgroundPermission([bool isRetry = false]) async {
+  //       // Required for android screenshare.
+  //       try {
+  //         bool hasPermissions = await FlutterBackground.hasPermissions;
+  //         if (!isRetry) {
+  //           const androidConfig = FlutterBackgroundAndroidConfig(
+  //             notificationTitle: 'Screen Sharing',
+  //             notificationText: 'LiveKit Example is sharing the screen.',
+  //             notificationImportance: AndroidNotificationImportance.Default,
+  //             notificationIcon: AndroidResource(
+  //                 name: 'livekit_ic_launcher', defType: 'mipmap'),
+  //           );
+  //           hasPermissions = await FlutterBackground.initialize(
+  //               androidConfig: androidConfig);
+  //         }
+  //         if (hasPermissions &&
+  //             !FlutterBackground.isBackgroundExecutionEnabled) {
+  //           await FlutterBackground.enableBackgroundExecution();
+  //         }
+  //       } catch (e) {
+  //         if (!isRetry) {
+  //           return await Future<void>.delayed(const Duration(seconds: 1),
+  //               () => requestBackgroundPermission(true));
+  //         }
+  //         print('could not publish video: $e');
+  //       }
+  //     }
 
-      await requestBackgroundPermission();
-    }
-    if (WebRTC.platformIsIOS) {
-      var track = await LocalVideoTrack.createScreenShareTrack(
-        const ScreenShareCaptureOptions(
-          useiOSBroadcastExtension: true,
-          maxFrameRate: 15.0,
-        ),
-      );
-      await participant.publishVideoTrack(track);
-      return;
-    }
-    await participant.setScreenShareEnabled(true, captureScreenAudio: true);
-  }
+  //     await requestBackgroundPermission();
+  //   }
+  //   if (WebRTC.platformIsIOS) {
+  //     var track = await LocalVideoTrack.createScreenShareTrack(
+  //       const ScreenShareCaptureOptions(
+  //         useiOSBroadcastExtension: true,
+  //         maxFrameRate: 15.0,
+  //       ),
+  //     );
+  //     await participant.publishVideoTrack(track);
+  //     return;
+  //   }
+  //   await participant.setScreenShareEnabled(true, captureScreenAudio: true);
+  // }
 
-  void _disableScreenShare() async {
-    await participant.setScreenShareEnabled(false);
-    if (Platform.isAndroid) {
-      // Android specific
-      try {
-        //   await FlutterBackground.disableBackgroundExecution();
-      } catch (error) {
-        print('error disabling screen share: $error');
-      }
-    }
-  }
+  // void _disableScreenShare() async {
+  //   await participant.setScreenShareEnabled(false);
+  //   if (Platform.isAndroid) {
+  //     // Android specific
+  //     try {
+  //       //   await FlutterBackground.disableBackgroundExecution();
+  //     } catch (error) {
+  //       print('error disabling screen share: $error');
+  //     }
+  //   }
+  // }
 
   void _onTapDisconnect() async {
     final result = await context.showDisconnectDialog();
     if (result == true) await widget.room.disconnect();
   }
 
-  void _onTapUpdateSubscribePermission() async {
-    final result = await context.showSubscribePermissionDialog();
-    if (result != null) {
-      try {
-        widget.room.localParticipant?.setTrackSubscriptionPermissions(
-          allParticipantsAllowed: result,
-        );
-      } catch (error) {
-        await context.showErrorDialog(error);
-      }
-    }
-  }
+  // void _onTapUpdateSubscribePermission() async {
+  //   final result = await context.showSubscribePermissionDialog();
+  //   if (result != null) {
+  //     try {
+  //       widget.room.localParticipant?.setTrackSubscriptionPermissions(
+  //         allParticipantsAllowed: result,
+  //       );
+  //     } catch (error) {
+  //       await context.showErrorDialog(error);
+  //     }
+  //   }
+  // }
 
-  void _onTapSimulateScenario() async {
-    final result = await context.showSimulateScenarioDialog();
-    if (result != null) {
-      print('${result}');
-      await widget.room.sendSimulateScenario(
-        signalReconnect:
-            result == SimulateScenarioResult.signalReconnect ? true : null,
-        nodeFailure: result == SimulateScenarioResult.nodeFailure ? true : null,
-        migration: result == SimulateScenarioResult.migration ? true : null,
-        serverLeave: result == SimulateScenarioResult.serverLeave ? true : null,
-        switchCandidate:
-            result == SimulateScenarioResult.switchCandidate ? true : null,
-      );
-    }
-  }
+  // void _onTapSimulateScenario() async {
+  //   final result = await context.showSimulateScenarioDialog();
+  //   if (result != null) {
+  //     print('${result}');
+  //     await widget.room.sendSimulateScenario(
+  //       signalReconnect:
+  //           result == SimulateScenarioResult.signalReconnect ? true : null,
+  //       nodeFailure: result == SimulateScenarioResult.nodeFailure ? true : null,
+  //       migration: result == SimulateScenarioResult.migration ? true : null,
+  //       serverLeave: result == SimulateScenarioResult.serverLeave ? true : null,
+  //       switchCandidate:
+  //           result == SimulateScenarioResult.switchCandidate ? true : null,
+  //     );
+  //   }
+  // }
 
-  void _onTapSendData() async {
-    final result = await context.showSendDataDialog();
-    if (result == true) {
-      await widget.participant.publishData(
-        utf8.encode('This is a sample data message'),
-      );
-    }
-  }
+  // void _onTapSendData() async {
+  //   final result = await context.showSendDataDialog();
+  //   if (result == true) {
+  //     await widget.participant.publishData(
+  //       utf8.encode('This is a sample data message'),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -259,11 +259,11 @@ class _ControlsWidgetState extends State<ControlsWidget> {
         spacing: 5,
         runSpacing: 5,
         children: [
-          IconButton(
-            onPressed: _unpublishAll,
-            icon: const Icon(EvaIcons.closeCircleOutline),
-            tooltip: 'Unpublish all',
-          ),
+          // IconButton(
+          //   onPressed: _unpublishAll,
+          //   icon: const Icon(EvaIcons.closeCircleOutline),
+          //   tooltip: 'Unpublish all',
+          // ),
           if (participant.isMicrophoneEnabled())
             PopupMenuButton<MediaDevice>(
               icon: const Icon(Icons.settings_voice),
@@ -398,38 +398,38 @@ class _ControlsWidgetState extends State<ControlsWidget> {
             onPressed: () => _toggleCamera(),
             tooltip: 'toggle camera',
           ),
-          if (participant.isScreenShareEnabled())
-            IconButton(
-              icon: const Icon(EvaIcons.monitorOutline),
-              onPressed: () => _disableScreenShare(),
-              tooltip: 'unshare screen (experimental)',
-            )
-          else
-            IconButton(
-              icon: const Icon(EvaIcons.monitor),
-              onPressed: () => _enableScreenShare(),
-              tooltip: 'share screen (experimental)',
-            ),
+          // if (participant.isScreenShareEnabled())
+          //   IconButton(
+          //     icon: const Icon(EvaIcons.monitorOutline),
+          //     onPressed: () => _disableScreenShare(),
+          //     tooltip: 'unshare screen (experimental)',
+          //   )
+          // else
+          //   IconButton(
+          //     icon: const Icon(EvaIcons.monitor),
+          //     onPressed: () => _enableScreenShare(),
+          //     tooltip: 'share screen (experimental)',
+          //   ),
           IconButton(
             onPressed: _onTapDisconnect,
             icon: const Icon(EvaIcons.closeCircle),
             tooltip: 'disconnect',
           ),
-          IconButton(
-            onPressed: _onTapSendData,
-            icon: const Icon(EvaIcons.paperPlane),
-            tooltip: 'send demo data',
-          ),
-          IconButton(
-            onPressed: _onTapUpdateSubscribePermission,
-            icon: const Icon(EvaIcons.settings2),
-            tooltip: 'Subscribe permission',
-          ),
-          IconButton(
-            onPressed: _onTapSimulateScenario,
-            icon: const Icon(EvaIcons.alertTriangle),
-            tooltip: 'Simulate scenario',
-          ),
+          // IconButton(
+          //   onPressed: _onTapSendData,
+          //   icon: const Icon(EvaIcons.paperPlane),
+          //   tooltip: 'send demo data',
+          // ),
+          // IconButton(
+          //   onPressed: _onTapUpdateSubscribePermission,
+          //   icon: const Icon(EvaIcons.settings2),
+          //   tooltip: 'Subscribe permission',
+          // ),
+          // IconButton(
+          //   onPressed: _onTapSimulateScenario,
+          //   icon: const Icon(EvaIcons.alertTriangle),
+          //   tooltip: 'Simulate scenario',
+          // ),
         ],
       ),
     );

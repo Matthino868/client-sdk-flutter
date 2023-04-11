@@ -56,12 +56,12 @@ class _ConnectPageState extends State<ConnectPage> {
     _tokenCtrl.text = const bool.hasEnvironment('TOKEN')
         ? const String.fromEnvironment('TOKEN')
         : prefs.getString(_storeKeyToken) ?? '';
-    setState(() {
-      _simulcast = prefs.getBool(_storeKeySimulcast) ?? true;
-      _adaptiveStream = prefs.getBool(_storeKeyAdaptiveStream) ?? true;
-      _dynacast = prefs.getBool(_storeKeyDynacast) ?? true;
-      _fastConnect = prefs.getBool(_storeKeyFastConnect) ?? false;
-    });
+    // setState(() {
+    //   _simulcast = prefs.getBool(_storeKeySimulcast) ?? true;
+    //   _adaptiveStream = prefs.getBool(_storeKeyAdaptiveStream) ?? true;
+    //   _dynacast = prefs.getBool(_storeKeyDynacast) ?? true;
+    //   _fastConnect = prefs.getBool(_storeKeyFastConnect) ?? false;
+    // });
   }
 
   // Save URL and Token
@@ -192,58 +192,58 @@ class _ConnectPageState extends State<ConnectPage> {
                       ctrl: _tokenCtrl,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Simulcast'),
-                        Switch(
-                          value: _simulcast,
-                          onChanged: (value) => _setSimulcast(value),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Adaptive Stream'),
-                        Switch(
-                          value: _adaptiveStream,
-                          onChanged: (value) => _setAdaptiveStream(value),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Fast Connect'),
-                        Switch(
-                          value: _fastConnect,
-                          onChanged: (value) => _setFastConnect(value),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Dynacast'),
-                        Switch(
-                          value: _dynacast,
-                          onChanged: (value) => _setDynacast(value),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text('Simulcast'),
+                  //       Switch(
+                  //         value: _simulcast,
+                  //         onChanged: (value) => _setSimulcast(value),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text('Adaptive Stream'),
+                  //       Switch(
+                  //         value: _adaptiveStream,
+                  //         onChanged: (value) => _setAdaptiveStream(value),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text('Fast Connect'),
+                  //       Switch(
+                  //         value: _fastConnect,
+                  //         onChanged: (value) => _setFastConnect(value),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 25),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text('Dynacast'),
+                  //       Switch(
+                  //         value: _dynacast,
+                  //         onChanged: (value) => _setDynacast(value),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   ElevatedButton(
                     onPressed: _busy ? null : () => _connect(context),
                     child: Row(
