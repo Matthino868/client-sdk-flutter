@@ -392,9 +392,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
               tooltip: 'un-mute video',
             ),
           IconButton(
-            icon: Icon(position == CameraPosition.back
-                ? EvaIcons.camera
-                : EvaIcons.person),
+            icon: const Icon(EvaIcons.swap),
             onPressed: () => _toggleCamera(),
             tooltip: 'toggle camera',
           ),

@@ -7,7 +7,7 @@ import 'pages/connect.dart';
 void main() async {
   final format = DateFormat('HH:mm:ss');
   // configure logs for debugging
-  Logger.root.level = Level.FINE;
+  Logger.root.level = Level.CONFIG;
   Logger.root.onRecord.listen((record) {
     print('${format.format(record.time)}: ${record.message}');
   });
