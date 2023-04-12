@@ -23,6 +23,7 @@ dependencies:
 
   livekit_client:
     path: ../
+  dart_jsonwebtoken: ^2.7.1
     # git:
     #   url: https://github.com/livekit/client-sdk-flutter
     #   ref: main

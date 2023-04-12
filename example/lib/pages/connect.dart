@@ -6,6 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../exts.dart';
 import 'room.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+// import 'package:flutter_js/flutter_js.dart';
+// import 'package:flutter/services.dart';
+// import 'dart:js' as js;
 
 class ConnectPage extends StatefulWidget {
   //
@@ -34,10 +38,13 @@ class _ConnectPageState extends State<ConnectPage> {
   bool _busy = false;
   bool _fastConnect = false;
 
+  // late JavascriptRuntime flutterJs;
+
   @override
   void initState() {
     super.initState();
     _readPrefs();
+    // flutterJs = getJavascriptRuntime();
   }
 
   @override
@@ -100,14 +107,14 @@ class _ConnectPageState extends State<ConnectPage> {
         _uriCtrl.text,
         _tokenCtrl.text,
         roomOptions: const RoomOptions(
-          // adaptiveStream: _adaptiveStream,
-          // dynacast: _dynacast,
-          // defaultVideoPublishOptions: VideoPublishOptions(
-          //   simulcast: _simulcast,
-          // ),
-          // defaultScreenShareCaptureOptions:
-          //     const ScreenShareCaptureOptions(useiOSBroadcastExtension: true),
-        ),
+            // adaptiveStream: _adaptiveStream,
+            // dynacast: _dynacast,
+            // defaultVideoPublishOptions: VideoPublishOptions(
+            //   simulcast: _simulcast,
+            // ),
+            // defaultScreenShareCaptureOptions:
+            //     const ScreenShareCaptureOptions(useiOSBroadcastExtension: true),
+            ),
         // fastConnectOptions: _fastConnect
         //     ? FastConnectOptions(
         //         microphone: const TrackOption(enabled: true),
@@ -265,10 +272,175 @@ class _ConnectPageState extends State<ConnectPage> {
                       ],
                     ),
                   ),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  ElevatedButton(
+                    onPressed: () {
+                      createToken();
+                    },
+                    // onPressed: () async {
+                    // JsEvalResult jsResult = flutterJs.evaluate("Math.trunc(5 * 100).toString();");
+                    // print('hello');
+                    // JavascriptRuntime runtime = getJavascriptRuntime();
+                    // dynamic path =
+                    //     await rootBundle.loadString('assets/livekit.js');
+                    // int v1 = 3;
+                    // int v2 = 2;
+                    // path.
+                    // JsEvalResult jsEvalResult =
+                    //     runtime.evaluate('''${path}addition($v1, $v2)''');
+                    // print(jsResult.stringResult);
+                    // },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_busy)
+                          const Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: SizedBox(
+                              height: 15,
+                              width: 15,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            ),
+                          ),
+                        const Text('TEST'),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ),
       );
+
+  int createToken() {
+    // APIC2DyqDnPnvZo
+    // iek3KSX9IJwvxfXGvBDVPoaszbBYqMW1RDUM1vy2gFO
+    print('begin');
+    String apiKey = 'APIC2DyqDnPnvZo';
+    String apiSecret = 'iek3KSX9IJwvxfXGvBDVPoaszbBYqMW1RDUM1vy2gFO';
+    Map<String, dynamic> grants = <String, dynamic>{};
+    grants['identity'] = 'Arthur';
+    var ttl = 900;
+    grants['name'] = 'Arthur1';
+    AccessToken at = AccessToken(apiKey, apiSecret, grants);
+    print(at.toJwt());
+    return 1;
+  }
+}
+
+class AccessToken {
+  String apiKey;
+
+  String apiSecret;
+
+  dynamic grants;
+
+  String? identity;
+
+  int? ttl;
+
+  /// Creates a new AccessToken
+  /// @param apiKey API Key, can be set in env LIVEKIT_API_KEY
+  /// @param apiSecret Secret, can be set in env LIVEKIT_API_SECRET
+  AccessToken(this.apiKey, this.apiSecret, Map<String, dynamic> options) {
+    // apiKey ??= process.env.LIVEKIT_API_KEY;
+    // if (!apiSecret) {
+    //   apiSecret = process.env.LIVEKIT_API_SECRET;
+    // }
+    // if (!apiKey || !apiSecret) {
+    //   throw Error('api-key and api-secret must be set');
+    // } else if (typeof document !== 'undefined') {
+    //   // check against document rather than window because deno provides window
+    //   console.error(
+    //     'You should not include your API secret in your web client bundle.\n\n' +
+    //       'Your web client should request a token from your backend server which should then use ' +
+    //       'the API secret to generate a token. See https://docs.livekit.io/client/connect/',
+    //   );
+    // }
+
+    grants = <String, dynamic>{};
+    identity = identity;
+    // this.ttl = options?.ttl || defaultTTL;
+    ttl = 900;
+    // if (options?.metadata) {
+    //   this.metadata = options.metadata;
+    // }
+    this.name = options['name'].toString();
+    // if (options?.name) {
+    //   this.name = options.name;
+    // }
+  }
+
+  /// Adds a video grant to this token.
+  /// @param grant
+  // void addGrant(VideoGrant grant) {
+  //   grants.video = grant;
+  // }
+
+  /// Set metadata to be passed to the Participant, used only when joining the room
+  set metadata(String md) {
+    grants['metadata'] = md;
+  }
+
+  set name(String name) {
+    grants['name'] = name;
+  }
+
+  dynamic get sha256 {
+    return grants['sha256'];
+  }
+
+  set sha256(dynamic sha) {
+    grants.sha256 = sha;
+  }
+
+  /// @returns JWT encoded token
+  String toJwt() {
+    // APIhvRxzFGmjNMj
+    // dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA
+    // TODO: check for video grant validity
+    final opts = JWT({
+      'iss': 'APIhvRxzFGmjNMj',
+      'sub': 'hi',
+      // 'exp': ttl,
+      'iat': 1681308109,
+      'nbf': 1681308109,
+      'exp': 1681329709,
+      // 'nbf': 0,
+      'video': {
+        'roomJoin': true, 'room': 'name-of-room',
+      },
+    });
+    // final opts1 = JWT({
+    //   'apiKey': 'APIhvRxzFGmjNMj',
+    //   'apiSecret': 'dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA',
+    //   'grants': {
+    //     'video': {'roomJoin': true, 'room': 'name-of-room'}
+    //   },
+    //   'identity': 'hi',
+    //   'ttl': 21600
+    // });
+    // const opts: jwt.SignOptions = {
+    //   issuer: this.apiKey,
+    //   expiresIn: this.ttl,
+    //   notBefore: 0,
+    // };
+    // if (identity != null) {
+    //   opts.subject = identity;
+    //   opts.jwtId = identity;
+    // } // else if (grants.video?.roomJoin) {
+    //   print`('identity is required for join but not set');
+    // }
+    dynamic v1 = opts.payload;
+    // dynamic v2 = opts.payload;
+    print('opts1 $v1');
+    // print('opts $v2');
+    return opts
+        .sign(SecretKey('dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA'));
+    // return jwt.sign(grants, apiSecret, opts);
+  }
 }
