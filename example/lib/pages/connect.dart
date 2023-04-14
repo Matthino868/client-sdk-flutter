@@ -415,26 +415,6 @@ class AccessToken {
         'roomJoin': true, 'room': 'name-of-room',
       },
     });
-    // final opts1 = JWT({
-    //   'apiKey': 'APIhvRxzFGmjNMj',
-    //   'apiSecret': 'dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA',
-    //   'grants': {
-    //     'video': {'roomJoin': true, 'room': 'name-of-room'}
-    //   },
-    //   'identity': 'hi',
-    //   'ttl': 21600
-    // });
-    // const opts: jwt.SignOptions = {
-    //   issuer: this.apiKey,
-    //   expiresIn: this.ttl,
-    //   notBefore: 0,
-    // };
-    // if (identity != null) {
-    //   opts.subject = identity;
-    //   opts.jwtId = identity;
-    // } // else if (grants.video?.roomJoin) {
-    //   print`('identity is required for join but not set');
-    // }
     dynamic v1 = opts.payload;
     // dynamic v2 = opts.payload;
     print('opts1 $v1');
