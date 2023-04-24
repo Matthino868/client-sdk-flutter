@@ -277,19 +277,6 @@ class _ConnectPageState extends State<ConnectPage> {
                     onPressed: () {
                       createToken();
                     },
-                    // onPressed: () async {
-                    // JsEvalResult jsResult = flutterJs.evaluate("Math.trunc(5 * 100).toString();");
-                    // print('hello');
-                    // JavascriptRuntime runtime = getJavascriptRuntime();
-                    // dynamic path =
-                    //     await rootBundle.loadString('assets/livekit.js');
-                    // int v1 = 3;
-                    // int v2 = 2;
-                    // path.
-                    // JsEvalResult jsEvalResult =
-                    //     runtime.evaluate('''${path}addition($v1, $v2)''');
-                    // print(jsResult.stringResult);
-                    // },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -407,9 +394,9 @@ class AccessToken {
       'iss': 'APIhvRxzFGmjNMj',
       'sub': 'hi',
       // 'exp': ttl,
-      'iat': 1681308109,
-      'nbf': 1681308109,
-      'exp': 1681329709,
+      'iat': 0,
+      // 'nbf': 1681308109,
+      // 'exp': 1681329709,
       // 'nbf': 0,
       'video': {
         'roomJoin': true, 'room': 'name-of-room',
