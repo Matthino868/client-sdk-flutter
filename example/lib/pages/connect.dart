@@ -275,7 +275,7 @@ class _ConnectPageState extends State<ConnectPage> {
                   const Padding(padding: EdgeInsets.only(top: 10)),
                   ElevatedButton(
                     onPressed: () {
-                      createToken();
+                      _tokenCtrl.text = createToken();
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -292,7 +292,7 @@ class _ConnectPageState extends State<ConnectPage> {
                               ),
                             ),
                           ),
-                        const Text('TEST'),
+                        const Text('GENERATE TOKEN'),
                       ],
                     ),
                   ),
@@ -303,7 +303,7 @@ class _ConnectPageState extends State<ConnectPage> {
         ),
       );
 
-  int createToken() {
+  String createToken() {
     // APIC2DyqDnPnvZo
     // iek3KSX9IJwvxfXGvBDVPoaszbBYqMW1RDUM1vy2gFO
     print('begin');
@@ -315,7 +315,7 @@ class _ConnectPageState extends State<ConnectPage> {
     grants['name'] = 'Arthur1';
     AccessToken at = AccessToken(apiKey, apiSecret, grants);
     print(at.toJwt());
-    return 1;
+    return at.toJwt();
   }
 }
 
@@ -388,26 +388,28 @@ class AccessToken {
   /// @returns JWT encoded token
   String toJwt() {
     // APIhvRxzFGmjNMj
+    int ttl = 2;
     // dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA
     // TODO: check for video grant validity
     final opts = JWT({
       'iss': 'APIhvRxzFGmjNMj',
-      'sub': 'hi',
+      'sub': 'Arthur',
       // 'exp': ttl,
-      'iat': 0,
+      'iat': DateTime.now().millisecondsSinceEpoch,
+      // 'nbf': DateTime.now().millisecondsSinceEpoch,
       // 'nbf': 1681308109,
-      // 'exp': 1681329709,
+      'exp': DateTime.now().millisecondsSinceEpoch + ttl*1000,
       // 'nbf': 0,
       'video': {
-        'roomJoin': true, 'room': 'name-of-room',
+        'roomJoin': true,
+        'room': 'name-of-room',
       },
     });
     dynamic v1 = opts.payload;
     // dynamic v2 = opts.payload;
     print('opts1 $v1');
     // print('opts $v2');
-    return opts
-        .sign(SecretKey('dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA'));
+    return opts.sign(SecretKey('dpoPPM7SAoNZp3kaYbofyAUgRDYrDwca8eieA1Y68OvA'));
     // return jwt.sign(grants, apiSecret, opts);
   }
 }
